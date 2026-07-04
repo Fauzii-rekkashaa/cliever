@@ -1,0 +1,243 @@
+/* ===================================================
+   Cliever - Pengajar Dashboard CSS
+   File: public/css/pengajar.css
+   =================================================== */
+
+/* ── Course Grid ── */
+.course-pengajar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.course-pengajar-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all var(--transition);
+}
+.course-pengajar-card:hover {
+    border-color: #c7d8f5;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* Thumbnail */
+.course-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #e2e8f0;
+}
+.course-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.course-thumbnail-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #e2e8f0, #cbd5e1); }
+
+/* Menu dots */
+.course-menu { position: absolute; top: .75rem; right: .75rem; }
+.course-menu-btn {
+    background: var(--white); border: none; border-radius: 8px;
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--gray-600); box-shadow: var(--shadow-sm); transition: all var(--transition);
+}
+.course-menu-btn:hover { background: var(--gray-100); }
+.course-menu-dropdown {
+    position: absolute; top: 38px; right: 0;
+    background: var(--white); border: 1.5px solid var(--gray-200);
+    border-radius: 10px; box-shadow: var(--shadow-md);
+    min-width: 150px; display: none; flex-direction: column; overflow: hidden; z-index: 10;
+}
+.course-menu-dropdown.show { display: flex; }
+.course-menu-dropdown a,
+.course-menu-dropdown button {
+    padding: .65rem 1rem; font-size: .85rem; font-family: var(--font-main);
+    font-weight: 500; color: var(--gray-700); text-decoration: none;
+    background: none; border: none; cursor: pointer; text-align: left;
+    transition: background var(--transition); width: 100%;
+}
+.course-menu-dropdown a:hover { background: var(--gray-50); }
+.course-menu-dropdown button { color: #ef4444; }
+.course-menu-dropdown button:hover { background: #fff1f2; }
+
+/* Course info */
+.course-pengajar-info { padding: 1rem 1.25rem .75rem; flex: 1; }
+.course-pengajar-judul { font-family: var(--font-main); font-size: .95rem; font-weight: 700; color: var(--gray-800); margin-bottom: .2rem; }
+.course-pengajar-by { font-size: .78rem; color: var(--gray-400); margin-bottom: .5rem; }
+.course-pengajar-desc { font-size: .83rem; color: var(--gray-600); line-height: 1.6; }
+
+/* Footer */
+.course-pengajar-footer { padding: .875rem 1.25rem; border-top: 1px solid var(--gray-100); }
+.btn-kelola-materi {
+    display: block; text-align: center; padding: .6rem;
+    border: 1.5px solid var(--gray-200); border-radius: 8px;
+    font-family: var(--font-main); font-size: .85rem; font-weight: 600;
+    color: var(--gray-700); text-decoration: none; transition: all var(--transition);
+}
+.btn-kelola-materi:hover { border-color: #93c5fd; color: #2563eb; background: #eff6ff; }
+
+/* ── Materi list ── */
+.materi-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
+.materi-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.25rem; background: var(--white);
+    border: 1.5px solid var(--gray-200); border-radius: 12px;
+    transition: all var(--transition);
+}
+.materi-item:hover { border-color: #c7d8f5; }
+.materi-judul { font-family: var(--font-main); font-weight: 600; font-size: .9rem; color: var(--gray-800); }
+.materi-urutan { font-size: .78rem; color: var(--gray-400); margin-top: .15rem; }
+
+/* ── Course form ── */
+.course-form-card {
+    background: var(--white); border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg); padding: 2rem 2.5rem; max-width: 700px;
+}
+
+@media (max-width: 600px) {
+    .course-pengajar-grid { grid-template-columns: 1fr; }
+}
+
+/* ===================================================
+   Course Detail & Materi Management
+   =================================================== */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--gray-600);
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    transition: color var(--transition);
+}
+.back-link:hover { color: var(--gray-800); }
+
+.course-detail-thumbnail {
+    width: 100%;
+    aspect-ratio: 21/8;
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+.course-detail-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+
+.course-detail-judul {
+    font-family: var(--font-main);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--gray-800);
+    margin-bottom: .75rem;
+}
+.course-detail-desc {
+    font-size: .95rem;
+    color: var(--gray-600);
+    line-height: 1.7;
+    max-width: 700px;
+    margin-bottom: 2rem;
+}
+
+/* Materi Card */
+.materi-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+.materi-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.75rem;
+    border-bottom: 1px solid var(--gray-100);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.materi-card-title { font-family: var(--font-main); font-size: 1.15rem; font-weight: 700; color: var(--gray-800); }
+.materi-card-count { font-size: .82rem; color: var(--gray-400); margin-top: .15rem; }
+
+.materi-list-wrap { display: flex; flex-direction: column; }
+.materi-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.75rem;
+    border-bottom: 1px solid var(--gray-100);
+    transition: background var(--transition);
+}
+.materi-row:last-child { border-bottom: none; }
+.materi-row:hover { background: var(--gray-50); }
+
+.materi-number {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-main); font-weight: 700; font-size: .85rem;
+    flex-shrink: 0;
+}
+.materi-row-info { flex: 1; }
+.materi-row-judul { font-family: var(--font-main); font-weight: 600; font-size: .92rem; color: var(--gray-800); margin-bottom: .25rem; }
+.materi-row-meta { display: flex; align-items: center; gap: 1rem; }
+.materi-meta-item { display: flex; align-items: center; gap: .35rem; font-size: .78rem; color: var(--gray-400); }
+
+.materi-row-actions { display: flex; align-items: center; gap: .4rem; flex-shrink: 0; }
+.materi-action-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; border: none; background: transparent;
+    color: var(--gray-400); cursor: pointer; text-decoration: none;
+    transition: all var(--transition);
+}
+.materi-action-btn:hover { background: var(--gray-100); color: var(--gray-700); }
+.materi-action-delete:hover { background: #fff1f2; color: #ef4444; }
+
+/* ── Modal ── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(-10px) scale(.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 1.75rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+.modal-header h3 { font-family: var(--font-main); font-size: 1.15rem; font-weight: 700; color: var(--gray-800); }
+.modal-close {
+    background: none; border: none; font-size: 1.5rem;
+    color: var(--gray-400); cursor: pointer; line-height: 1;
+    transition: color var(--transition);
+}
+.modal-close:hover { color: var(--gray-700); }
+.modal-body { padding: 1.5rem 1.75rem; display: flex; flex-direction: column; gap: 1.1rem; }
+.modal-footer {
+    display: flex; justify-content: flex-end; gap: .75rem;
+    padding: 1.25rem 1.75rem;
+    border-top: 1px solid var(--gray-100);
+}

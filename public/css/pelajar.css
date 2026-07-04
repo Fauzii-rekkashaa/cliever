@@ -1,0 +1,490 @@
+/* ===================================================
+   Cliever - Pelajar Dashboard CSS
+   File: public/css/pelajar.css
+   =================================================== */
+
+/* ── Learning Progress Card ── */
+.progress-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 2rem;
+}
+.progress-card-title {
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 1.5rem;
+}
+
+.progress-item { margin-bottom: 1.5rem; }
+.progress-item:last-child { margin-bottom: 0; }
+.progress-item-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: .6rem;
+}
+.progress-item-judul {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .95rem;
+    color: var(--gray-800);
+}
+.progress-item-by {
+    font-size: .8rem;
+    color: var(--gray-400);
+    margin-top: .15rem;
+}
+.progress-percent {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .9rem;
+    color: var(--gray-700);
+    flex-shrink: 0;
+}
+
+.progress-bar-track {
+    width: 100%;
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: 100px;
+    overflow: hidden;
+}
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    border-radius: 100px;
+    transition: width 0.4s ease;
+}
+
+/* ── Continue Learning Grid ── */
+.continue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.continue-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition);
+}
+.continue-card:hover {
+    border-color: #c7d8f5;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.continue-thumbnail {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+}
+.continue-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.continue-info { padding: 1.1rem 1.25rem 1.25rem; }
+.continue-judul {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .95rem;
+    color: var(--gray-800);
+    margin-bottom: .2rem;
+}
+.continue-by {
+    font-size: .8rem;
+    color: var(--gray-400);
+    margin-bottom: 1rem;
+}
+.continue-progress-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: .8rem;
+    color: var(--gray-600);
+    margin-bottom: .4rem;
+}
+
+@media (max-width: 600px) {
+    .continue-grid { grid-template-columns: 1fr; }
+    .progress-card { padding: 1.5rem; }
+}
+
+/* ── Browse Course ── */
+.browse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.browse-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition);
+}
+.browse-card:hover {
+    border-color: #c7d8f5;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.browse-info { padding: 1.1rem 1.25rem 1.25rem; }
+
+.enroll-btn {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .9rem;
+    cursor: pointer;
+    padding: 0;
+    transition: color var(--transition);
+}
+.enroll-btn:hover { color: #1d4ed8; text-decoration: underline; }
+
+@media (max-width: 600px) {
+    .browse-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Course Detail Layout (with sidebar) ── */
+.course-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+    align-items: start;
+}
+.course-detail-main { min-width: 0; }
+
+/* Progress panel */
+.progress-panel {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    position: sticky;
+    top: 2rem;
+}
+.progress-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .95rem;
+    color: var(--gray-800);
+    margin-bottom: .75rem;
+}
+.progress-panel-sub {
+    font-size: .8rem;
+    color: var(--gray-400);
+    margin-bottom: 1.25rem;
+}
+.btn-continue-learning {
+    width: 100%;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: var(--white);
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .9rem;
+    padding: .75rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 4px 14px rgba(37,99,235,.3);
+}
+.btn-continue-learning:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,.4); }
+
+/* Materi checkbox-style number */
+.materi-row-clickable { align-items: center; }
+.materi-check-btn {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-main); font-weight: 700; font-size: .85rem;
+    flex-shrink: 0;
+    transition: all var(--transition);
+}
+.materi-check-btn:hover { background: var(--gray-200); }
+.materi-check-done {
+    background: #dcfce7;
+    color: #16a34a;
+}
+.materi-check-done:hover { background: #bbf7d0; }
+
+@media (max-width: 900px) {
+    .course-detail-layout { grid-template-columns: 1fr; }
+    .progress-panel { position: static; }
+}
+
+/* ── Materi Locked State ── */
+.materi-row-locked {
+    opacity: .55;
+    cursor: not-allowed;
+}
+.materi-check-locked {
+    background: var(--gray-100) !important;
+    color: var(--gray-400) !important;
+}
+.materi-row-clickable:hover {
+    background: var(--gray-50);
+}
+
+/* ── Materi Show Page ── */
+.materi-show-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.5rem;
+    max-width: 800px;
+}
+
+.video-wrapper {
+    width: 100%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #000;
+    margin-bottom: .75rem;
+}
+.video-wrapper video {
+    width: 100%;
+    display: block;
+    max-height: 480px;
+}
+.video-hint {
+    font-size: .82rem;
+    color: #d97706;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: .6rem 1rem;
+}
+
+.file-preview-box {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--gray-50);
+    border: 1.5px dashed var(--gray-200);
+    border-radius: var(--radius-md);
+}
+
+.teks-content {
+    font-size: .95rem;
+    color: var(--gray-700);
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+@media (max-width: 600px) {
+    .materi-show-card { padding: 1.5rem; }
+}
+
+/* ── Sertifikat ── */
+.sertifikat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+}
+
+.sertifikat-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition);
+}
+.sertifikat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.sertifikat-banner {
+    background: linear-gradient(160deg, #5b9cf6, #2563eb 60%, #1d4ed8);
+    padding: 2rem 1.75rem;
+    text-align: center;
+    color: var(--white);
+}
+.sertifikat-title {
+    font-family: var(--font-main);
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin: .75rem 0 1rem;
+}
+.sertifikat-sub {
+    font-size: .82rem;
+    color: rgba(255,255,255,.8);
+    margin-bottom: .3rem;
+}
+.sertifikat-nama {
+    font-family: var(--font-main);
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: .5rem 0 1rem;
+}
+.sertifikat-course {
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.sertifikat-detail { padding: 1.5rem 1.75rem; }
+.sertifikat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .6rem 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: .85rem;
+    color: var(--gray-600);
+}
+.sertifikat-row:last-of-type { border-bottom: none; }
+.sertifikat-row strong { color: var(--gray-800); font-family: var(--font-main); }
+
+.btn-download-sertifikat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: .7rem;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 10px;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .9rem;
+    color: var(--gray-700);
+    text-decoration: none;
+    transition: all var(--transition);
+}
+.btn-download-sertifikat:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+@media (max-width: 600px) {
+    .sertifikat-grid { grid-template-columns: 1fr; }
+}
+
+/* ===================================================
+   FIX: Thumbnail placeholder rapi (mencegah konten lain numpuk)
+   =================================================== */
+.course-detail-thumbnail {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+.course-detail-thumbnail:empty,
+.course-detail-thumbnail:not(:has(img)) {
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+}
+.course-detail-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.continue-thumbnail {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+.continue-thumbnail:empty,
+.continue-thumbnail:not(:has(img)) {
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+}
+
+/* ===================================================
+   RAPIKAN: Course Detail Layout & Spacing
+   =================================================== */
+.course-detail-thumbnail {
+    aspect-ratio: 21/7;
+    max-height: 220px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
+}
+
+.course-detail-judul {
+    margin-bottom: .25rem !important;
+}
+
+.materi-card {
+    margin-top: 1.5rem;
+}
+
+/* Progress panel lebih konsisten */
+.progress-panel {
+    margin-top: 0;
+}
+
+/* Materi row check button - pastikan ukuran konsisten */
+.materi-check-btn {
+    flex-shrink: 0;
+}
+.materi-row-clickable {
+    padding: 1.1rem 1.5rem;
+}
+
+/* Pastikan card course preview (sebelum enroll) konsisten juga */
+.course-detail-sidebar .progress-panel {
+    text-align: center;
+}
+
+/* ===================================================
+   RAPIKAN: Browse Course Cards
+   =================================================== */
+.browse-card .continue-thumbnail {
+    aspect-ratio: 16/9;
+}
+
+/* My Course Cards */
+.continue-card .continue-thumbnail {
+    aspect-ratio: 16/9;
+}
+
+/* Pastikan tidak ada elemen form/input nyangkut di thumbnail kosong */
+.course-detail-thumbnail *,
+.continue-thumbnail * {
+    pointer-events: none;
+}
+.course-detail-thumbnail img,
+.continue-thumbnail img {
+    pointer-events: auto;
+}
+
+/* ===================================================
+   FIX: Back link style - pastikan tidak ke-override
+   =================================================== */
+.back-link,
+.back-link:link,
+.back-link:visited {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: .5rem !important;
+    color: var(--gray-600) !important;
+    text-decoration: none !important;
+    font-size: .9rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 1.5rem !important;
+    transition: color var(--transition) !important;
+    font-family: var(--font-body) !important;
+}
+.back-link:hover {
+    color: var(--gray-800) !important;
+    text-decoration: none !important;
+}
+.back-link svg {
+    flex-shrink: 0;
+    stroke: currentColor;
+}
