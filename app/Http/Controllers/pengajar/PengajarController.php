@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pengajar;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Materi;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,7 @@ class PengajarController extends Controller
 
         $courses = Course::where('user_id', Auth::id())
             ->withCount('materi')
+            ->with('reviews')
             ->when($search, fn($q) => $q->where('judul', 'like', "%{$search}%"))
             ->latest()
             ->get();
@@ -26,6 +28,30 @@ class PengajarController extends Controller
         $totalPelajar = 0;
 
         return view('pengajar.dashboard', compact('courses', 'totalCourse', 'totalMateri', 'totalPelajar'));
+    }
+
+    // ─── Lihat Review Course ───────────────────────────────────
+    public function reviewCourse(Course $course)
+    {
+        abort_if($course->user_id !== Auth::id(), 403);
+
+        $reviews = Review::where('course_id', $course->id)
+            ->with('user')
+            ->latest()
+            ->get();
+
+        $avgRating    = $reviews->avg('rating') ?? 0;
+        $totalReviews = $reviews->count();
+
+        // Hitung distribusi rating (berapa banyak bintang 1,2,3,4,5)
+        $distribution = [];
+        for ($i = 5; $i >= 1; $i--) {
+            $distribution[$i] = $reviews->where('rating', $i)->count();
+        }
+
+        return view('pengajar.course_reviews', compact(
+            'course', 'reviews', 'avgRating', 'totalReviews', 'distribution'
+        ));
     }
 
     // ─── Create Course ────────────────────────────────────────
@@ -56,7 +82,8 @@ class PengajarController extends Controller
             'status'         => 'menunggu',
         ]);
 
-        return redirect()->route('pengajar.dashboard')->with('success', 'Course berhasil ditambahkan, menunggu konfirmasi admin.');
+        return redirect()->route('pengajar.dashboard')
+            ->with('success', 'Course berhasil ditambahkan, menunggu konfirmasi admin.');
     }
 
     public function editCourse(Course $course)
@@ -147,13 +174,29 @@ class PengajarController extends Controller
             'urutan'           => $urutan,
         ]);
 
-        return redirect()->route('pengajar.materi', $course->id)->with('success', 'Materi berhasil ditambahkan.');
+        $course->load('enrollments.course.materi');
+        foreach ($course->enrollments as $enrollment) {
+            $enrollment->recalculateProgress();
+        }
+
+        return redirect()->route('pengajar.materi', $course->id)
+            ->with('success', 'Materi berhasil ditambahkan.');
     }
 
     public function destroyMateri(Materi $materi)
     {
+        $course   = Course::with('enrollments.course.materi')->find($materi->course_id);
         $courseId = $materi->course_id;
+
         $materi->delete();
-        return redirect()->route('pengajar.materi', $courseId)->with('success', 'Materi berhasil dihapus.');
+
+        if ($course) {
+            foreach ($course->enrollments as $enrollment) {
+                $enrollment->recalculateProgress();
+            }
+        }
+
+        return redirect()->route('pengajar.materi', $courseId)
+            ->with('success', 'Materi berhasil dihapus.');
     }
 }

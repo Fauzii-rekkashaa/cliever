@@ -7,10 +7,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Pengajar\PengajarController;
 use App\Http\Controllers\Pelajar\PelajarController;
 
-// ── Landing ────────────────────────────────────────────────────
 Route::get('/', [LandingController::class, 'index'])->name('home');
 
-// ── Auth (Guest only) ──────────────────────────────────────────
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.store');
@@ -18,7 +16,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 });
 
-// ── Logout ─────────────────────────────────────────────────────
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 // ── Admin ──────────────────────────────────────────────────────
@@ -50,27 +47,29 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'nocache'])->group(f
 
 // ── Pengajar ───────────────────────────────────────────────────
 Route::prefix('pengajar')->name('pengajar.')->middleware(['auth', 'nocache'])->group(function () {
-    Route::get('/dashboard',              [PengajarController::class, 'dashboard'])->name('dashboard');
-    Route::get('/course/create',          [PengajarController::class, 'createCourse'])->name('course.create');
-    Route::post('/course',                [PengajarController::class, 'storeCourse'])->name('course.store');
-    Route::get('/course/{course}/edit',   [PengajarController::class, 'editCourse'])->name('course.edit');
-    Route::put('/course/{course}',        [PengajarController::class, 'updateCourse'])->name('course.update');
-    Route::delete('/course/{course}',     [PengajarController::class, 'destroyCourse'])->name('course.destroy');
-    Route::get('/course/{course}/materi', [PengajarController::class, 'materi'])->name('materi');
-    Route::post('/course/{course}/materi',[PengajarController::class, 'storeMateri'])->name('materi.store');
-    Route::delete('/materi/{materi}',     [PengajarController::class, 'destroyMateri'])->name('materi.destroy');
+    Route::get('/dashboard',                    [PengajarController::class, 'dashboard'])->name('dashboard');
+    Route::get('/course/create',                [PengajarController::class, 'createCourse'])->name('course.create');
+    Route::post('/course',                      [PengajarController::class, 'storeCourse'])->name('course.store');
+    Route::get('/course/{course}/edit',         [PengajarController::class, 'editCourse'])->name('course.edit');
+    Route::put('/course/{course}',              [PengajarController::class, 'updateCourse'])->name('course.update');
+    Route::delete('/course/{course}',           [PengajarController::class, 'destroyCourse'])->name('course.destroy');
+    Route::get('/course/{course}/materi',       [PengajarController::class, 'materi'])->name('materi');
+    Route::post('/course/{course}/materi',      [PengajarController::class, 'storeMateri'])->name('materi.store');
+    Route::delete('/materi/{materi}',           [PengajarController::class, 'destroyMateri'])->name('materi.destroy');
+    Route::get('/course/{course}/reviews',      [PengajarController::class, 'reviewCourse'])->name('course.reviews');
 });
 
 // ── Pelajar ────────────────────────────────────────────────────
 Route::prefix('pelajar')->name('pelajar.')->middleware(['auth', 'nocache'])->group(function () {
-    Route::get('/dashboard',         [PelajarController::class, 'dashboard'])->name('dashboard');
-    Route::get('/my-course',         [PelajarController::class, 'myCourse'])->name('mycourse');
-    Route::get('/course/preview/{course}', [PelajarController::class, 'coursePreview'])->name('course.preview');
-    Route::get('/course/{course}',   [PelajarController::class, 'courseDetail'])->name('course.detail');
-    Route::get('/materi/{materi}',   [PelajarController::class, 'materiShow'])->name('materi.show');
-    Route::post('/materi/{materi}/selesai', [PelajarController::class, 'selesaikanMateri'])->name('materi.selesai');
-    Route::get('/browse',            [PelajarController::class, 'browse'])->name('browse');
-    Route::post('/enroll/{course}',  [PelajarController::class, 'enroll'])->name('enroll');
-    Route::get('/certificates',      [PelajarController::class, 'sertifikat'])->name('sertifikat');
+    Route::get('/dashboard',                          [PelajarController::class, 'dashboard'])->name('dashboard');
+    Route::get('/my-course',                          [PelajarController::class, 'myCourse'])->name('mycourse');
+    Route::get('/course/preview/{course}',            [PelajarController::class, 'coursePreview'])->name('course.preview');
+    Route::get('/course/{course}',                    [PelajarController::class, 'courseDetail'])->name('course.detail');
+    Route::post('/course/{course}/review',            [PelajarController::class, 'submitReview'])->name('review.submit');
+    Route::get('/materi/{materi}',                    [PelajarController::class, 'materiShow'])->name('materi.show');
+    Route::post('/materi/{materi}/selesai',           [PelajarController::class, 'selesaikanMateri'])->name('materi.selesai');
+    Route::get('/browse',                             [PelajarController::class, 'browse'])->name('browse');
+    Route::post('/enroll/{course}',                   [PelajarController::class, 'enroll'])->name('enroll');
+    Route::get('/certificates',                       [PelajarController::class, 'sertifikat'])->name('sertifikat');
     Route::get('/certificates/{enrollment}/download', [PelajarController::class, 'downloadSertifikat'])->name('sertifikat.download');
 });
