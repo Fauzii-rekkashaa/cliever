@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="page-header">
-    <h1 class="page-title">Browse Course</h1>
-    <p class="page-subtitle">Discover new skills and expand your knowledge</p>
+    <h1 class="page-title">Jelajahi Kursus</h1>
+    <p class="page-subtitle">Temukan keterampilan baru dan perluas pengetahuan Anda</p>
 </div>
 
 @if(session('success'))

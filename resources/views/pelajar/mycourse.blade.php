@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="page-header">
-    <h1 class="page-title">My Course</h1>
-    <p class="page-subtitle">Manage and track your enrolled courses</p>
+    <h1 class="page-title">Kursus Saya</h1>
+    <p class="page-subtitle">Kelola dan lacak kursus yang telah Anda ikuti</p>
 </div>
 
 @if(session('success'))

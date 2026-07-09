@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="page-header">
-    <h1 class="page-title">My Certificates</h1>
-    <p class="page-subtitle">View and download your earned certificates</p>
+    <h1 class="page-title">Sertifikat Kelulusan</h1>
+    <p class="page-subtitle">Lihat dan unduh sertifikat yang telah Anda raih</p>
 </div>
 
 <div class="sertifikat-grid">

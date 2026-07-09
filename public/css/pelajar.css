@@ -488,3 +488,267 @@
     flex-shrink: 0;
     stroke: currentColor;
 }
+
+/* ===================================================
+   RATING & REVIEW
+   =================================================== */
+
+/* Stats bar di atas review */
+.course-stats-bar {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.course-stat-item {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .82rem;
+    color: var(--gray-600);
+    background: var(--gray-50);
+    border: 1.5px solid var(--gray-200);
+    border-radius: 20px;
+    padding: .35rem .85rem;
+    font-weight: 500;
+}
+
+/* Rating summary card */
+.review-summary-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+.review-summary-left { text-align: center; flex-shrink: 0; }
+.review-avg-number {
+    font-family: var(--font-main);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--gray-800);
+    line-height: 1;
+    margin-bottom: .4rem;
+}
+.review-stars-display { display: flex; gap: 2px; justify-content: center; }
+.review-summary-right { flex: 1; display: flex; flex-direction: column; gap: .4rem; }
+.review-bar-row { display: flex; align-items: center; gap: .5rem; }
+.review-bar-label { font-size: .82rem; color: var(--gray-600); width: 12px; text-align: right; }
+.review-bar-track { flex: 1; height: 8px; background: var(--gray-100); border-radius: 100px; overflow: hidden; }
+.review-bar-fill { height: 100%; background: #f59e0b; border-radius: 100px; transition: width .4s ease; }
+.review-bar-count { font-size: .78rem; color: var(--gray-400); width: 20px; }
+
+/* Form tulis ulasan */
+.review-form-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.25rem;
+}
+.review-form-title {
+    font-family: var(--font-main);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+}
+.review-star-input { display: flex; flex-direction: column; gap: .4rem; }
+.star-rating { display: flex; gap: .25rem; cursor: pointer; }
+.star { transition: transform .15s; }
+.star:hover { transform: scale(1.15); }
+.btn-kirim-ulasan {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    padding: .5rem 1.25rem;
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: .875rem;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: all var(--transition);
+}
+.btn-kirim-ulasan:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+/* Review item list */
+.review-item {
+    background: var(--white);
+    border: 1.5px solid var(--gray-100);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: .75rem;
+}
+.review-item-header { display: flex; gap: .875rem; align-items: flex-start; }
+.review-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-main); font-weight: 700; font-size: .9rem;
+    color: white; flex-shrink: 0;
+}
+.review-username { font-family: var(--font-main); font-weight: 700; font-size: .9rem; color: var(--gray-800); }
+.review-time { font-size: .78rem; color: var(--gray-400); }
+.review-komentar { font-size: .875rem; color: var(--gray-600); line-height: 1.6; margin-top: .4rem; }
+
+@media (max-width: 600px) {
+    .review-summary-card { flex-direction: column; gap: 1.25rem; }
+    .review-summary-left { width: 100%; }
+}
+
+/* ── Rating & Review ── */
+.course-tab-info {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.course-tab-item {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--gray-50);
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    padding: .4rem .9rem;
+    font-size: .82rem;
+    color: var(--gray-600);
+}
+.course-tab-item strong { color: var(--gray-800); margin-left:.2rem; }
+
+/* Rating summary */
+.rating-summary-card {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+}
+.rating-big-score {
+    text-align: center;
+    flex-shrink: 0;
+}
+.rating-number {
+    font-family: var(--font-main);
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--gray-800);
+    line-height: 1;
+    display: block;
+    margin-bottom: .4rem;
+}
+.rating-stars-display {
+    display: flex;
+    gap: .15rem;
+    justify-content: center;
+    margin-bottom: .4rem;
+}
+.rating-bars { flex: 1; display: flex; flex-direction: column; gap: .4rem; }
+.rating-bar-row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .82rem;
+    color: var(--gray-600);
+}
+.rating-bar-label { width: 10px; text-align: right; flex-shrink: 0; }
+.rating-bar-track-outer {
+    flex: 1;
+    height: 8px;
+    background: var(--gray-100);
+    border-radius: 100px;
+    overflow: hidden;
+}
+.rating-bar-track-fill {
+    height: 100%;
+    background: #f59e0b;
+    border-radius: 100px;
+    transition: width .3s ease;
+}
+.rating-bar-count { width: 20px; flex-shrink: 0; }
+
+/* Review form */
+.review-form-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+.review-form-title {
+    font-family: var(--font-main);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+}
+.star-picker {
+    display: flex;
+    gap: .35rem;
+    margin-bottom: .25rem;
+}
+.star-pick { transition: transform .1s; }
+.star-pick:hover { transform: scale(1.15); }
+
+/* Review item */
+.review-item {
+    display: flex;
+    gap: .875rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gray-100);
+}
+.review-item:last-child { border-bottom: none; }
+.review-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .9rem;
+    flex-shrink: 0;
+}
+.review-content { flex: 1; }
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: .35rem;
+}
+.review-name {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: .9rem;
+    color: var(--gray-800);
+    margin-right: .5rem;
+}
+.review-stars-small {
+    display: flex;
+    align-items: center;
+    gap: .1rem;
+    margin-top: .2rem;
+}
+.review-komentar {
+    font-size: .88rem;
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin-top: .35rem;
+}
+
+@media (max-width: 600px) {
+    .rating-summary-card { flex-direction: column; gap: 1rem; }
+}

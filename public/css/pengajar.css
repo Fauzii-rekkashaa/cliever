@@ -241,3 +241,47 @@
     padding: 1.25rem 1.75rem;
     border-top: 1px solid var(--gray-100);
 }
+
+/* ── Rating Summary (pengajar) ── */
+.rating-summary-card {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+}
+.rating-big-score { text-align: center; flex-shrink: 0; }
+.rating-number {
+    font-family: var(--font-main);
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--gray-800);
+    line-height: 1;
+    display: block;
+    margin-bottom: .4rem;
+}
+.rating-stars-display { display: flex; gap: .15rem; justify-content: center; margin-bottom: .4rem; }
+.rating-bars { flex: 1; display: flex; flex-direction: column; gap: .4rem; }
+.rating-bar-row { display: flex; align-items: center; gap: .5rem; font-size: .82rem; color: var(--gray-600); }
+.rating-bar-label { width: 10px; text-align: right; flex-shrink: 0; }
+.rating-bar-track-outer { flex: 1; height: 8px; background: var(--gray-100); border-radius: 100px; overflow: hidden; }
+.rating-bar-track-fill { height: 100%; background: #f59e0b; border-radius: 100px; transition: width .3s ease; }
+.rating-bar-count { width: 20px; flex-shrink: 0; }
+
+/* Review item */
+.review-item { display: flex; gap: .875rem; padding: 1rem 0; border-bottom: 1px solid var(--gray-100); }
+.review-item:last-child { border-bottom: none; }
+.review-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-main); font-weight: 700; font-size: .9rem; flex-shrink: 0;
+}
+.review-content { flex: 1; }
+.review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .35rem; }
+.review-name { font-family: var(--font-main); font-weight: 700; font-size: .9rem; color: var(--gray-800); margin-right: .5rem; }
+.review-stars-small { display: flex; align-items: center; gap: .1rem; margin-top: .2rem; }
+.review-komentar { font-size: .88rem; color: var(--gray-700); line-height: 1.6; margin-top: .35rem; }

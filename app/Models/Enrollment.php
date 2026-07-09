@@ -16,6 +16,7 @@ class Enrollment extends Model
         'progress',
     ];
 
+    // ─── Relationships ────────────────────────────────────────
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -36,7 +37,18 @@ class Enrollment extends Model
         return $this->hasMany(MateriProgress::class);
     }
 
-    // ─── Helper: hitung ulang progress berdasarkan materi selesai ──
+    public function review()
+{
+    return $this->hasOne(\App\Models\Review::class);
+}
+
+    // ─── Recalculate progress ─────────────────────────────────
+    // Cukup update kolom 'progress' saja dari PHP
+    // Trigger BEFORE UPDATE di MySQL yang otomatis:
+    // - set status_penyelesaian = 'selesai' kalau progress >= 100
+    // - set status_penyelesaian = 'belum_selesai' kalau progress < 100
+    // Trigger AFTER UPDATE di MySQL yang otomatis:
+    // - generate sertifikat kalau status berubah jadi 'selesai'
     public function recalculateProgress(): void
     {
         $totalMateri = $this->course->materi()->count();
@@ -46,12 +58,14 @@ class Enrollment extends Model
             return;
         }
 
-        $selesaiCount = $this->materiProgress()->where('selesai', true)->count();
+        $selesaiCount = $this->materiProgress()
+            ->where('selesai', true)
+            ->count();
+
         $percent = (int) round(($selesaiCount / $totalMateri) * 100);
 
-        $this->update([
-            'progress' => $percent,
-            'status_penyelesaian' => $percent === 100 ? 'selesai' : 'belum_selesai',
-        ]);
+        // Hanya update progress — trigger MySQL yang handle status_penyelesaian
+        // dan generate sertifikat otomatis
+        $this->update(['progress' => $percent]);
     }
 }
