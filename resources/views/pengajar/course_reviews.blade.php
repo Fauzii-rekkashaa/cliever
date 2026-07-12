@@ -1,143 +1,134 @@
 @extends('layouts.pengajar')
 
-@section('title', 'Dashboard Pengajar - Cliever')
+@section('title', 'Ulasan - ' . $course->judul . ' - Cliever')
 
 @section('content')
 
-<div class="page-header" style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-    <div>
-        <h1 class="page-title">Dashboard Overview</h1>
-        <p class="page-subtitle">Kelola course dan materi pembelajaran Anda</p>
-    </div>
-    <a href="{{ route('pengajar.course.create') }}" class="btn-primary-admin">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Tambah Course
-    </a>
+<a href="{{ route('pengajar.dashboard') }}" class="back-link">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Kembali ke Dashboard
+</a>
+
+<div class="course-detail-thumbnail">
+    @if($course->thumbnail)
+        <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->judul }}">
+    @endif
 </div>
 
-<div class="stats-grid" style="grid-template-columns: repeat(3,1fr); margin-bottom:2rem;">
-    <div class="stat-card">
-        <div class="stat-icon stat-icon--green">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.75"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+<h1 class="course-detail-judul">{{ $course->judul }}</h1>
+<p class="course-detail-desc">{{ $course->deskripsi }}</p>
+
+{{-- Rating Summary --}}
+<div class="rating-summary-card" style="margin-top:1.5rem;">
+    <div class="rating-big-score">
+        <span class="rating-number">{{ number_format($avgRating, 1) }}</span>
+        <div class="rating-stars-display">
+            @for($i = 1; $i <= 5; $i++)
+            <svg width="22" height="22" viewBox="0 0 24 24"
+                fill="{{ $i <= round($avgRating) ? '#f59e0b' : 'none' }}"
+                stroke="#f59e0b" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            @endfor
         </div>
-        <p class="stat-label">Total Course</p>
-        <p class="stat-number">{{ $totalCourse }}</p>
+        <p style="font-size:.8rem; color:var(--gray-400);">{{ $totalReviews }} ulasan</p>
     </div>
-    <div class="stat-card">
-        <div class="stat-icon" style="background:#fff7ed;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.75"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+
+    <div class="rating-bars">
+        @for($i = 5; $i >= 1; $i--)
+        @php $count = $distribution[$i] ?? 0; $pct = $totalReviews > 0 ? ($count/$totalReviews)*100 : 0; @endphp
+        <div class="rating-bar-row">
+            <span class="rating-bar-label">{{ $i }}</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            <div class="rating-bar-track-outer">
+                <div class="rating-bar-track-fill" style="width:{{ $pct }}%"></div>
+            </div>
+            <span class="rating-bar-count">{{ $count }}</span>
         </div>
-        <p class="stat-label">Total Materi</p>
-        <p class="stat-number">{{ $totalMateri }}</p>
+        @endfor
     </div>
-    <div class="stat-card">
-        <div class="stat-icon stat-icon--blue">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
-        <p class="stat-label">Total Pelajar</p>
-        <p class="stat-number">{{ $totalPelajar }}</p>
+
+    {{-- Statistik singkat --}}
+    <div style="flex-shrink:0; text-align:center; padding:0 1rem; border-left:1.5px solid var(--gray-100);">
+        @php
+            $positif = $reviews->where('rating', '>=', 4)->count();
+            $pctPositif = $totalReviews > 0 ? round(($positif/$totalReviews)*100) : 0;
+        @endphp
+        <p style="font-size:.8rem; color:var(--gray-400); margin-bottom:.5rem;">Tingkat Kepuasan</p>
+        <p style="font-family:var(--font-main); font-size:1.75rem; font-weight:800; color:#22c55e;">{{ $pctPositif }}%</p>
+        <p style="font-size:.75rem; color:var(--gray-400);">pelajar puas</p>
     </div>
 </div>
 
-<div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
-    <form method="GET" action="{{ route('pengajar.dashboard') }}" style="flex:1;">
-        <div class="search-box">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" name="search" class="search-input" placeholder="Cari course"
-                value="{{ request('search') }}" autocomplete="off">
-        </div>
-    </form>
+{{-- Filter Badge --}}
+<div style="display:flex; gap:.75rem; margin:1.5rem 0; flex-wrap:wrap;">
+    <span style="display:inline-flex; align-items:center; gap:.35rem; background:#f0fdf4; border:1.5px solid #bbf7d0; color:#16a34a; border-radius:20px; padding:.3rem .9rem; font-size:.82rem; font-weight:600;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+        {{ $positif }} positif ({{ $pctPositif }}%)
+    </span>
+    <span style="display:inline-flex; align-items:center; gap:.35rem; background:var(--gray-50); border:1.5px solid var(--gray-200); color:var(--gray-600); border-radius:20px; padding:.3rem .9rem; font-size:.82rem; font-weight:600;">
+        {{ $totalReviews - $positif }} perlu perhatian
+    </span>
 </div>
 
-<div class="course-pengajar-grid">
-    @forelse($courses as $course)
-    @php
-        $avgRating    = $course->reviews->avg('rating') ?? 0;
-        $totalReviews = $course->reviews->count();
-    @endphp
-    <div class="course-pengajar-card">
-        <div class="course-thumbnail">
-            @if($course->thumbnail)
-                <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->judul }}">
-            @else
-                <div class="course-thumbnail-placeholder"></div>
-            @endif
+{{-- List Ulasan --}}
+<div class="materi-card">
+    <div class="materi-card-header">
+        <div>
+            <h2 class="materi-card-title">Semua Ulasan</h2>
+            <p class="materi-card-count">{{ $totalReviews }} ulasan dari pelajar</p>
+        </div>
+    </div>
 
-            <div class="course-menu">
-                <button class="course-menu-btn" onclick="toggleMenu({{ $course->id }})">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
-                    </svg>
-                </button>
-                <div class="course-menu-dropdown" id="menu-{{ $course->id }}">
-                    <a href="{{ route('pengajar.course.edit', $course->id) }}">Edit Course</a>
-                    <form method="POST" action="{{ route('pengajar.course.destroy', $course->id) }}"
-                          onsubmit="return confirm('Hapus course ini?')">
-                        @csrf @method('DELETE')
-                        <button type="submit">Hapus Course</button>
-                    </form>
+    <div style="padding:0 1.75rem;">
+        @forelse($reviews as $review)
+        <div class="review-item">
+            <div class="review-avatar">
+                {{ strtoupper(substr($review->user->nama ?? $review->user->username, 0, 1)) }}
+            </div>
+            <div class="review-content">
+                <div class="review-header">
+                    <div>
+                        <span class="review-name">{{ $review->user->nama ?? $review->user->username }}</span>
+                        <div class="review-stars-small">
+                            @for($i = 1; $i <= 5; $i++)
+                            <svg width="13" height="13" viewBox="0 0 24 24"
+                                fill="{{ $i <= $review->rating ? '#f59e0b' : 'none' }}"
+                                stroke="#f59e0b" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                            @endfor
+                            <span style="font-size:.75rem; color:var(--gray-400); margin-left:.25rem;">
+                                {{ $review->created_at->diffForHumans() }}
+                            </span>
+                            {{-- Badge positif/negatif --}}
+                            @if($review->rating >= 4)
+                            <span style="margin-left:.5rem; background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0; border-radius:20px; padding:.1rem .6rem; font-size:.72rem; font-weight:600;">Positif</span>
+                            @elseif($review->rating >= 3)
+                            <span style="margin-left:.5rem; background:#fffbeb; color:#d97706; border:1px solid #fde68a; border-radius:20px; padding:.1rem .6rem; font-size:.72rem; font-weight:600;">Netral</span>
+                            @else
+                            <span style="margin-left:.5rem; background:#fef2f2; color:#dc2626; border:1px solid #fecaca; border-radius:20px; padding:.1rem .6rem; font-size:.72rem; font-weight:600;">Perlu Perhatian</span>
+                            @endif
+                        </div>
+                    </div>
                 </div>
+                @if($review->komentar)
+                <p class="review-komentar">{{ $review->komentar }}</p>
+                @else
+                <p style="font-size:.82rem; color:var(--gray-400); font-style:italic; margin-top:.35rem;">Tidak ada komentar.</p>
+                @endif
             </div>
         </div>
-
-        <div class="course-pengajar-info">
-            <h3 class="course-pengajar-judul">{{ $course->judul }}</h3>
-            <p class="course-pengajar-by">oleh {{ Auth::user()->username }}</p>
-
-            {{-- Rating mini --}}
-            @if($totalReviews > 0)
-            <div style="display:flex; align-items:center; gap:.35rem; margin-top:.4rem;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-                <span style="font-family:var(--font-main); font-weight:700; font-size:.85rem; color:var(--gray-800);">
-                    {{ number_format($avgRating, 1) }}
-                </span>
-                <span style="font-size:.78rem; color:var(--gray-400);">({{ $totalReviews }} ulasan)</span>
-            </div>
-            @else
-            <p style="font-size:.78rem; color:var(--gray-400); margin-top:.4rem;">Belum ada ulasan</p>
-            @endif
-
-            <p class="course-pengajar-desc">{{ Str::limit($course->deskripsi, 80) }}</p>
+        @empty
+        <div style="text-align:center; padding:3rem; color:var(--gray-400); font-style:italic;">
+            Belum ada ulasan untuk course ini.
         </div>
-
-        <div class="course-pengajar-footer">
-            <a href="{{ route('pengajar.materi', $course->id) }}" class="btn-kelola-materi">
-                Kelola Materi ({{ $course->materi_count }})
-            </a>
-            <a href="{{ route('pengajar.course.reviews', $course->id) }}"
-               class="btn-kelola-materi"
-               style="background:var(--gray-50); color:var(--gray-700); border:1.5px solid var(--gray-200); margin-top:.5rem; display:flex; align-items:center; justify-content:center; gap:.4rem;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-                Lihat Ulasan ({{ $totalReviews }})
-            </a>
-        </div>
+        @endforelse
     </div>
-    @empty
-    <div style="grid-column:1/-1; text-align:center; padding:3rem; color:#94a3b8; font-style:italic;">
-        Belum ada course. Klik "Tambah Course" untuk mulai.
-    </div>
-    @endforelse
 </div>
 
 @endsection
-
-@push('scripts')
-<script>
-function toggleMenu(id) {
-    const menu = document.getElementById('menu-' + id);
-    menu.classList.toggle('show');
-    document.querySelectorAll('.course-menu-dropdown').forEach(m => {
-        if (m.id !== 'menu-' + id) m.classList.remove('show');
-    });
-}
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.course-menu')) {
-        document.querySelectorAll('.course-menu-dropdown').forEach(m => m.classList.remove('show'));
-    }
-});
-</script>
-@endpush

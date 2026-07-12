@@ -12,7 +12,7 @@
 </a>
 
 <div class="page-header">
-    <h1 class="page-title">{{ $course ? 'Edit Course' : 'Tambah Course' }}</h1>
+    <h1 class="page-title">{{ $course ? 'Edit Course' : 'Buat Course' }}</h1>
     <p class="page-subtitle">{{ $course ? 'Perbarui informasi course' : 'Buat course baru untuk diajarkan' }}</p>
 </div>
 
