@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Materi;
 use App\Models\Review;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,11 @@ class PengajarController extends Controller
 
         $totalCourse  = $courses->count();
         $totalMateri  = $courses->sum('materi_count');
-        $totalPelajar = 0;
+
+        // Hitung jumlah pelajar UNIK yang enroll ke course milik pengajar ini
+        $totalPelajar = Enrollment::whereIn('course_id', $courses->pluck('id'))
+            ->distinct('user_id')
+            ->count('user_id');
 
         return view('pengajar.dashboard', compact('courses', 'totalCourse', 'totalMateri', 'totalPelajar'));
     }
